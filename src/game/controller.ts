@@ -1,18 +1,12 @@
 import { JsonController, Get, Post, Put, Param, Body, HttpCode, NotFoundError } from 'routing-controllers'
 import Game from './entity'
-import { defaultBoard, randomColor } from '../lib/color';
+import { randomColor } from '../lib/color';
 
 const colors = ['red', 'green', 'blue', 'yellow', 'magenta']
 
 const isValidColor = (color) => {
   return colors.includes(color)
 }
-
-const moves = (board1, board2) =>
-  board1
-    .map((row, y) => row.filter((cell, x) => board2[y][x] !== cell))
-    .reduce((a, b) => a.concat(b))
-    .length
 
 @JsonController()
 export default class GameController {
@@ -29,24 +23,25 @@ export default class GameController {
     @Param('id') id: number,
     @Body() update: Partial<Game>
   ) {
-    const game = await Game.findOneById(id)
+    const game = await Game.findOne(id)
     if(!game) throw new NotFoundError('Cannot find game!')
-    if(moves(game.board, defaultBoard) < 1) return Game.merge(game, update).save()
-    else return "Invalid move"
+    return Game.merge(game, update).save()
   }
   
   @Post('/games')
   @HttpCode(201)
   async createGame(
-  @Body({validate: true}) game: Game
+  @Body() game: Game
   ) {    
-    // await console.log(game)
-    // const valid = game.color
-    // console.log('_____________\nCOLOR:',valid)
-    
-      const result = await Game.save({name: game.name, color: randomColor()})
+    if(game.color && isValidColor(game.color)) {
+        const result = await Game.save(game)
+        return { result }
+    }
+    if(!game.color) {
+      const color = randomColor()
+      const result = await Game.save({name: game.name, color: color})
       return { result }
-
-    // { name: game.name, color: randomColor() }
+    }
+    else return "Please enter a valid color"
   }
 }

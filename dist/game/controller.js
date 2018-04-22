@@ -16,27 +16,29 @@ const colors = ['red', 'green', 'blue', 'yellow', 'magenta'];
 const isValidColor = (color) => {
     return colors.includes(color);
 };
-const moves = (board1, board2) => board1
-    .map((row, y) => row.filter((cell, x) => board2[y][x] !== cell))
-    .reduce((a, b) => a.concat(b))
-    .length;
 let GameController = class GameController {
     async allGames() {
         const games = await entity_1.default.find();
         return { games };
     }
     async updateGame(id, update) {
-        const game = await entity_1.default.findOneById(id);
+        const game = await entity_1.default.findOne(id);
         if (!game)
             throw new routing_controllers_1.NotFoundError('Cannot find game!');
-        if (moves(game.board, color_1.defaultBoard) < 1)
-            return entity_1.default.merge(game, update).save();
-        else
-            return "Invalid move";
+        return entity_1.default.merge(game, update).save();
     }
     async createGame(game) {
-        const result = await entity_1.default.save({ name: game.name, color: color_1.randomColor() });
-        return { result };
+        if (game.color && isValidColor(game.color)) {
+            const result = await entity_1.default.save(game);
+            return { result };
+        }
+        if (!game.color) {
+            const color = color_1.randomColor();
+            const result = await entity_1.default.save({ name: game.name, color: color });
+            return { result };
+        }
+        else
+            return "Please enter a valid color";
     }
 };
 __decorate([
@@ -50,7 +52,7 @@ __decorate([
 __decorate([
     routing_controllers_1.Post('/games'),
     routing_controllers_1.HttpCode(201),
-    __param(0, routing_controllers_1.Body({ validate: true }))
+    __param(0, routing_controllers_1.Body())
 ], GameController.prototype, "createGame", null);
 GameController = __decorate([
     routing_controllers_1.JsonController()

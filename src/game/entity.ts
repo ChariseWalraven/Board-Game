@@ -3,11 +3,9 @@ import { BaseEntity } from 'typeorm/repository/BaseEntity'
 import { defaultBoard } from'../lib/color'
 import { IsString, IsIn } from 'class-validator'
 
+
 const colors = ['red', 'green', 'blue', 'yellow', 'magenta']
 
-const isValidColor = (color) => {
-  return colors.includes(color)
-}
 
 @Entity()
 export default class Game extends BaseEntity {

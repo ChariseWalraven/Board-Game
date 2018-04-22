@@ -11,9 +11,6 @@ const BaseEntity_1 = require("typeorm/repository/BaseEntity");
 const color_1 = require("../lib/color");
 const class_validator_1 = require("class-validator");
 const colors = ['red', 'green', 'blue', 'yellow', 'magenta'];
-const isValidColor = (color) => {
-    return colors.includes(color);
-};
 let Game = class Game extends BaseEntity_1.BaseEntity {
 };
 __decorate([

@@ -1,4 +1,4 @@
-const colors =  {
+export const colors: object =  {
   1: 'red',
   2: 'blue',
   3: 'green',
@@ -6,21 +6,17 @@ const colors =  {
   5: 'magenta'
 }
 
-const defaultBoard = [
+export const defaultBoard = [
   ['o', 'o', 'o'],
   ['o', 'o', 'o'],
   ['o', 'o', 'o']
 ]
 
-const randomColor = () => {
+export const randomColor = () => {
   return colors[Math.round(Math.random() * 4) + 1]
     .toString()
 }
 
-const arr = ['red', 'green', 'blue', 'yellow', 'magenta']
-
-const isValidColor = (color) => {
-  return arr.includes(color)
+export const isValidColor = (color: string) => {
+  return ['red', 'green', 'blue', 'yellow', 'magenta'].includes(color)
 }
-
-console.log(isValidColor('grey'))
