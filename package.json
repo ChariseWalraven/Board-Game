@@ -4,13 +4,15 @@
   "main": "dist/index.js",
   "license": "MIT",
   "scripts": {
-    "start": "node ."
+    "start": "node .",
+    "test": "jest"
   },
   "dependencies": {
     "@types/koa": "^2.0.45",
     "@types/koa-bodyparser": "^4.2.0",
     "@types/koa-multer": "^1.0.0",
     "@types/koa-router": "^7.0.27",
+    "jest": "^22.4.3",
     "koa": "^2.5.0",
     "koa-bodyparser": "^4.2.0",
     "koa-multer": "^1.0.2",
