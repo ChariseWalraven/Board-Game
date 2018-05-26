@@ -1,11 +1,12 @@
 {
-  "name": "Board-Project",
+  "name": "board-project",
   "version": "1.0.0",
   "main": "dist/index.js",
   "license": "MIT",
   "scripts": {
     "start": "node .",
-    "test": "jest"
+    "test": "jest",
+    "dev" : "nodemon . --inspect"
   },
   "dependencies": {
     "@types/koa": "^2.0.45",
@@ -21,5 +22,5 @@
     "routing-controllers": "^0.7.7",
     "typeorm": "^0.2.0"
   },
-  "author": "Charise Walraven <cherri.walraven@gmail.com>"
+  "author": "Charise Walraven <walraven@charise.info>"
 }
