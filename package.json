@@ -6,6 +6,7 @@
   "scripts": {
     "start": "node .",
     "test": "jest",
+    "compile" : "tsc",
     "dev" : "nodemon . --inspect"
   },
   "dependencies": {

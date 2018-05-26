@@ -31,17 +31,12 @@ export default class GameController {
   @Post('/games')
   @HttpCode(201)
   async createGame(
-  @Body() game: Game
-  ) {    
-    if(game.color && isValidColor(game.color)) {
-        const result = await Game.save(game)
-        return { result }
-    }
-    if(!game.color) {
-      const color = randomColor()
-      const result = await Game.save({name: game.name, color: color})
-      return { result }
-    }
-    else return "Please enter a valid color"
+  @Body() data: Game
+  ) {
+    const {color, ...rest} = data
+    const entity = Game.create(rest)
+    await entity.setColor(color)
+    const game = await entity.save()
+    return {game}
   }
 }
