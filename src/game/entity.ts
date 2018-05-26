@@ -1,11 +1,7 @@
 import { Entity, PrimaryGeneratedColumn, Column } from 'typeorm'
 import { BaseEntity } from 'typeorm/repository/BaseEntity'
 import { defaultBoard, randomColor } from'../lib/color'
-import { IsString, IsIn } from 'class-validator'
-
-type Colors = 'red' | 'green' | 'blue' | 'yellow' | 'magenta'
-const colors = ['red', 'green', 'blue', 'yellow', 'magenta']
-
+import { IsString} from 'class-validator'
 
 @Entity()
 export default class Game extends BaseEntity {
@@ -18,12 +14,12 @@ export default class Game extends BaseEntity {
   name: string
 
   @Column('text')
-  color: Colors
+  color: string
 
   @Column('json', {default: defaultBoard})
   board: string
 
-  async setColor(givenColor: Colors) { 
+  async setColor(givenColor: string) { 
     try {
       if(!givenColor) this.color = randomColor()
       else this.color = givenColor

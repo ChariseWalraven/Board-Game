@@ -1,4 +1,8 @@
-export const colors: object =  {
+interface ColorObj {
+  [propName: number]: string 
+}
+
+export const colors: ColorObj =  {
   1: 'red',
   2: 'blue',
   3: 'green',
@@ -18,5 +22,6 @@ export const randomColor = () => {
 }
 
 export const isValidColor = (color: string) => {
+  console.log(color)
   return ['red', 'green', 'blue', 'yellow', 'magenta'].includes(color)
 }

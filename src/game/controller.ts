@@ -1,12 +1,6 @@
-import { JsonController, Get, Post, Put, Param, Body, HttpCode, NotFoundError, BadRequestError } from 'routing-controllers'
+import { JsonController, Get, Post, Put, Param, Body, HttpCode, NotFoundError, MethodNotAllowedError } from 'routing-controllers'
 import Game from './entity'
-import { randomColor, defaultBoard } from '../lib/color';
-
-const colors = ['red', 'green', 'blue', 'yellow', 'magenta']
-
-const isValidColor = (color) => {
-  return colors.includes(color)
-}
+import { isValidColor } from '../lib/color';
 
 @JsonController()
 export default class GameController {
@@ -35,8 +29,12 @@ export default class GameController {
   ) {
     const {color, ...rest} = data
     const entity = Game.create(rest)
-    await entity.setColor(color)
-    const game = await entity.save()
-    return {game}
+    const valid = await isValidColor(color)
+    if(valid) {
+      await entity.setColor(color)
+      const game = await entity.save()
+      return {game}
+    }
+    else throw new MethodNotAllowedError('Invalid Color')
   }
 }
