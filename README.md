@@ -1,7 +1,5 @@
 # Board Game :game_die:
 
----
-
 In this project, I built a backend for a tic tac toe game.
 
 ## Quickstart :rocket:
@@ -13,8 +11,6 @@ In this project, I built a backend for a tic tac toe game.
  5. happy hacking! :ok_hand:
 
 ## Endpoints
-
----
 
 * `GET/games` - returns all the games in db
 * `POST/games` - saves a game with a 3 x 3 board and a random color
